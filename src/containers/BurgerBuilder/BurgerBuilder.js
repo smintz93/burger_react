@@ -80,6 +80,10 @@ class BurgerBuilder extends Component  {
 	purchaseHandler = () => {
 		this.setState({purchasing: true})
 	}
+
+	closeModal = () => {
+		this.setState({purchasing: false})
+	}
 	render(){
 		const disableInfo = {
 			//copying state in an immuatable way
@@ -92,7 +96,7 @@ class BurgerBuilder extends Component  {
 		// console.log(this.state.ingredients, 'this is state in Burger Builder')
 		return(
 			<Aux>
-				<Modal show={this.state.purchasing}>
+				<Modal show={this.state.purchasing} modalClosed={this.closeModal}>
 					<OrderSummary ingredients={this.state.ingredients} />
 				</Modal>
 				<Burger ingredients={this.state.ingredients}/>
