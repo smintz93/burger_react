@@ -3,10 +3,11 @@ import classes from './Toolbar.css'
 
 import Logo from '../../Logo/Logo';
 import NavItems from '../NavItems/navItems'
+import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
-const toolbar = () => (
+const toolbar = (props) => (
 	<header className={classes.Toolbar}>
-		<div>MENU</div>
+		<DrawerToggle />
 		<div className={classes.Logo}>
 			<Logo />
 		</div>
