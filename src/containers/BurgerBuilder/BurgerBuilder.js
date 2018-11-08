@@ -23,18 +23,19 @@ class BurgerBuilder extends Component  {
 	// 	this.state ={...}
 	// }
 	state = {
-		ingredients: {
-			salad: 0,
-			bacon: 0,
-			cheese: 0,
-			meat: 0
-		},
+		ingredients: null,
 		totalPrice: 0,
 		purchaseable: false,
 		purchasing: false, 
 		loading: false
 	}
 
+	componentDidMount() {
+		axios.get('https://react-my-burger-a9222.firebaseio.com/ingredients.json')
+			.then(response => {
+				this.setState({ingredients: response.data})
+			});
+	}
 	updatePurchaseState = (ingredients) => {
 		// creating an array to sum ingredient totals to check if they have been added to order
 		const sum = Object.keys(ingredients).map(igKey => {
@@ -123,28 +124,43 @@ class BurgerBuilder extends Component  {
 		}
 		// {salad: true, meat: false, ... }
 		// console.log(this.state.ingredients, 'this is state in Burger Builder')
-		let orderSummary = 	<OrderSummary 
+		let orderSummary = null
+
+
+		let burger = <Spinner />
+
+		if(this.state.ingredients) {
+			burger =  (
+				<Aux>
+					<Burger ingredients={this.state.ingredients}/>
+					<BuildControls 
+						ingredientAdded={this.addIngredient} 
+						ingredientRemoved={this.removeIngredient}
+						disabled={disableInfo}
+						price={this.state.totalPrice}
+						purchaseable={this.state.purchaseable}
+						ordered={this.purchaseHandler}/>
+				</Aux>
+			);	
+
+				 orderSummary = 	( 
+				 	<OrderSummary 
 						ingredients={this.state.ingredients} 
 						closePurchase={this.closeModal}
 						continuePurchase={this.purchaseContinue}
-						price={this.state.totalPrice}/>
+						price={this.state.totalPrice}/>	)
+		}
 
 		if(this.state.loading){
 			orderSummary = <Spinner />
 		}
+	
 		return(
 			<Aux>
 				<Modal show={this.state.purchasing} modalClosed={this.closeModal}>
 					{orderSummary}
 				</Modal>
-				<Burger ingredients={this.state.ingredients}/>
-				<BuildControls 
-					ingredientAdded={this.addIngredient} 
-					ingredientRemoved={this.removeIngredient}
-					disabled={disableInfo}
-					price={this.state.totalPrice}
-					purchaseable={this.state.purchaseable}
-					ordered={this.purchaseHandler}/>
+				{burger}
 			</Aux>
 		);
 	}
