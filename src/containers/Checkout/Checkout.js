@@ -1,6 +1,8 @@
 // stateful 
 import React, { Component } from 'react';
 
+import CheckoutSummary from '../../componets/Order/CheckoutSummary/CheckoutSummary';
+
 class Checkout extends Component {
 
 	state = {
@@ -11,6 +13,7 @@ class Checkout extends Component {
 
 		return (
 			<div>
+				<CheckoutSummary />
 			</div>
 		);
 	}
