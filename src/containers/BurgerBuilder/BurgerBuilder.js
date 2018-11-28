@@ -95,29 +95,30 @@ class BurgerBuilder extends Component  {
 	}
 	purchaseContinue = () => {
 		// alert('You continue');
-		this.setState({loading: true})
-		const order = {
-			ingredients: this.state.ingredients,
-			price: this.state.totalPrice,
-			customer: {
-				name: 'Sam Mintz',
-				address: {
-					street: 'Teststreet 1',
-					zipcode: '60610',
-					country: 'USA'
-				},
-				email: 'test@test.com'
-			},
-			deliveryMethod: 'fastest'
-		}
-		axios.post('/orders.json', order) // for firebase to work correctly need .json 
-			.then(response => {
-				this.setState({loading: false, purchasing: false});
-			})
-			.catch(error => {
-				this.setState({loading: false, purchasing: false});
-			});
-	}
+		// this.setState({loading: true})
+		// const order = {
+		// 	ingredients: this.state.ingredients,
+		// 	price: this.state.totalPrice,
+		// 	customer: {
+		// 		name: 'Sam Mintz',
+		// 		address: {
+		// 			street: 'Teststreet 1',
+		// 			zipcode: '60610',
+		// 			country: 'USA'
+		// 		},
+		// 		email: 'test@test.com'
+		// 	},
+		// 	deliveryMethod: 'fastest'
+		// }	
+		// axios.post('/orders.json', order) // for firebase to work correctly need .json 
+		// 	.then(response => {
+		// 		this.setState({loading: false, purchasing: false});
+		// 	})
+		// 	.catch(error => {
+		// 		this.setState({loading: false, purchasing: false});
+		// 	});
+		this.props.history.push('/checkout');
+	}	
 	render(){
 		const disableInfo = {
 			//copying state in an immuatable way
