@@ -15,10 +15,21 @@ const reducer = (state = initialState, action) => {
 
 		case actionTypes.ADD_INGREDIENT:
 			return {
-
+				// don't resuse old state...create new one
+				...state,
+				ingredients: {
+					...state.ingredients,
+					// need to override ingreds (es 6 syntax)
+					[action.ingedientName]: state.ingredients[action.ingedientName] + 1
+				}
 			};
 		case actionTypes.REMOVE_INGREDIENT:
 			return {
+				...state, 
+				ingredients: {
+					...state.ingredients,
+					[action.ingedientName]: state.ingredients[action.ingedientName] - 1
+				}
 
 			};
 		default:
