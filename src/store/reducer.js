@@ -28,17 +28,18 @@ const reducer = (state = initialState, action) => {
 				ingredients: {
 					...state.ingredients,
 					// need to override ingreds (es 6 syntax)
-					[action.ingredientName]: state.ingredients[action.ingredientName] + 1;
+					[action.ingredientName]: state.ingredients[action.ingredientName] + 1
 				},
-				totalPrice: state.totalPrice
+				totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
 			};
 		case actionTypes.REMOVE_INGREDIENT:
 			return {
 				...state, 
 				ingredients: {
 					...state.ingredients,
-					[action.ingredientName]: state.ingredients[action.ingredientName] - 1;
-				}
+					[action.ingredientName]: state.ingredients[action.ingredientName] - 1
+				},
+				totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
 
 			};
 		default:

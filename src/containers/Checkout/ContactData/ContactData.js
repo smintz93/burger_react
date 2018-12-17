@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from './ContactData.css';
@@ -103,8 +103,8 @@ class ContactData extends Component {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
         }
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+            ingredients: this.props.ings,
+            price: this.props.totalPrice,
             orderData: formData
         }
         axios.post( '/orders.json', order )
@@ -203,4 +203,12 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+// coming from reducerstate
+const mapStateToProps = (state) => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);
