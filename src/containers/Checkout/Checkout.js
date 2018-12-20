@@ -1,6 +1,6 @@
 // stateful 
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 import { connect } from 'react-redux';
@@ -18,18 +18,22 @@ class Checkout extends Component {
 	}
 
 	render(){
-
+		let summary = <Redirect to="/" />
+		if(this.props.ings) {
+			summary = (
+				<div>
+					<CheckoutSummary 
+						cancelCheckout={this.checkoutCancelled} 
+						continueCheckout={this.chceckoutContinued} 
+						ingredients={this.props.ings}/>
+					<Route 
+						path={this.props.match.path + '/contact-data'} 
+						component={ContactData} />
+				</div>	
+			);
+		}
 		return (
-			<div>
-				<CheckoutSummary 
-					cancelCheckout={this.checkoutCancelled} 
-					continueCheckout={this.chceckoutContinued} 
-					ingredients={this.props.ings}/>
-				<Route 
-				path={this.props.match.path + '/contact-data'} 
-				component={ContactData} />
-
-			</div>
+				{summary}
 		);
 	}
 }
