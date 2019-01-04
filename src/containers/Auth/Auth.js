@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import classes from './Auth.css';
 
 class Auth extends Component {
 	state = {
@@ -33,8 +34,57 @@ class Auth extends Component {
                 valid: false,
                 touched: false
 			}
-		}	    
-}
+		}
+	}	
+
+	checkValidity(value, rules) {
+
+        let isValid = true;
+        if (!rules) {
+            return true;
+        }
+        
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid
+        }
+
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid
+        }
+
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        return isValid;
+    }	
+
+    inputChangedHandler = (event, controlName) => {
+
+    	const updatedControls = {
+    		...this.state.controls,
+    		[controlName]: {
+    			...this.state.controls[controlName],
+    			value: event.target.value,
+    			valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+    			touched: true
+    		}
+    	}	
+    	this.setState({controls: updatedControls});	
+    }	
+    
+    	    
+
 	render () {
 
 		const formElementsArray = [];
@@ -58,10 +108,10 @@ class Auth extends Component {
 
         	));
 		return (
-			<div>
+			<div className={classes.AuthForm}>
 				<form>
 					{form}
-				 	<Button btnType="success">Submit</Button>    	
+				 	<Button btnType="Success">Submit</Button>    	
 				</form>
 			</div>
 		);
