@@ -7,16 +7,16 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch(action.type) {
-		case: actionTypes.PURCHASE_BURGER_START:
+		case actionTypes.PURCHASE_BURGER_START:
 			return {
 				...state,
 				loading: true
-			}
+			};
 		case actionTypes.PURCHASE_BURGER_SUCCESS:
 		// this is coming from action creator 
 		const newOrder = {
-			...action.orderData, 
-			id: ...action.orderId
+			...action.orderData,
+			id: action.orderId
 
 		};
 			return {
